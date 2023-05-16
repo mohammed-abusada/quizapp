@@ -229,6 +229,100 @@ import 'package:flutter/material.dart';
 
 import 'CreateQuizScreen.dart';
 import 'StartQuizScreen.dart';
+import 'models.dart';
+
+final quiz = Quiz(title: 'My Quiz', questions: [
+  Question(
+    questionText: 'What is the capital of France?',
+    options: [
+      Option(optionText: 'Paris', isCorrect: true),
+      Option(optionText: 'London', isCorrect: false),
+      Option(optionText: 'Berlin', isCorrect: false),
+      Option(optionText: 'Madrid', isCorrect: false),
+    ],
+  ),
+  Question(
+    questionText: 'Who directed the movie "The Godfather"?',
+    options: [
+      Option(optionText: 'Francis Ford Coppola', isCorrect: true),
+      Option(optionText: 'Martin Scorsese', isCorrect: false),
+      Option(optionText: 'Steven Spielberg', isCorrect: false),
+      Option(optionText: 'Alfred Hitchcock', isCorrect: false),
+    ],
+  ),
+  Question(
+    questionText: 'What is the capital of France?',
+    options: [
+      Option(optionText: 'Paris', isCorrect: true),
+      Option(optionText: 'London', isCorrect: false),
+      Option(optionText: 'Berlin', isCorrect: false),
+      Option(optionText: 'Madrid', isCorrect: false),
+    ],
+  ),
+  Question(
+    questionText: 'Who directed the movie "The Godfather"?',
+    options: [
+      Option(optionText: 'Francis Ford Coppola', isCorrect: true),
+      Option(optionText: 'Martin Scorsese', isCorrect: false),
+      Option(optionText: 'Steven Spielberg', isCorrect: false),
+      Option(optionText: 'Alfred Hitchcock', isCorrect: false),
+    ],
+  ),
+  Question(
+    questionText: 'What is the capital of France?',
+    options: [
+      Option(optionText: 'Paris', isCorrect: true),
+      Option(optionText: 'London', isCorrect: false),
+      Option(optionText: 'Berlin', isCorrect: false),
+      Option(optionText: 'Madrid', isCorrect: false),
+    ],
+  ),
+  Question(
+    questionText: 'Who directed the movie "The Godfather"?',
+    options: [
+      Option(optionText: 'Francis Ford Coppola', isCorrect: true),
+      Option(optionText: 'Martin Scorsese', isCorrect: false),
+      Option(optionText: 'Steven Spielberg', isCorrect: false),
+      Option(optionText: 'Alfred Hitchcock', isCorrect: false),
+    ],
+  ),
+  Question(
+    questionText: 'What is the capital of France?',
+    options: [
+      Option(optionText: 'Paris', isCorrect: true),
+      Option(optionText: 'London', isCorrect: false),
+      Option(optionText: 'Berlin', isCorrect: false),
+      Option(optionText: 'Madrid', isCorrect: false),
+    ],
+  ),
+  Question(
+    questionText: 'Who directed the movie "The Godfather"?',
+    options: [
+      Option(optionText: 'Francis Ford Coppola', isCorrect: true),
+      Option(optionText: 'Martin Scorsese', isCorrect: false),
+      Option(optionText: 'Steven Spielberg', isCorrect: false),
+      Option(optionText: 'Alfred Hitchcock', isCorrect: false),
+    ],
+  ),
+  Question(
+    questionText: 'What is the capital of France?',
+    options: [
+      Option(optionText: 'Paris', isCorrect: true),
+      Option(optionText: 'London', isCorrect: false),
+      Option(optionText: 'Berlin', isCorrect: false),
+      Option(optionText: 'Madrid', isCorrect: false),
+    ],
+  ),
+  Question(
+    questionText: 'Who directed the movie "The Godfather"?',
+    options: [
+      Option(optionText: 'Francis Ford Coppola', isCorrect: true),
+      Option(optionText: 'Martin Scorsese', isCorrect: false),
+      Option(optionText: 'Steven Spielberg', isCorrect: false),
+      Option(optionText: 'Alfred Hitchcock', isCorrect: false),
+    ],
+  ),
+]);
 
 class Homepage extends StatelessWidget {
   @override
@@ -259,7 +353,7 @@ class Homepage extends StatelessWidget {
                 // Navigate to create quiz screen
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CreateQuizScreen()),
+                  MaterialPageRoute(builder: (context) => CreateQuizScreen(quiz:quiz,)),
                 );
               },
             ),

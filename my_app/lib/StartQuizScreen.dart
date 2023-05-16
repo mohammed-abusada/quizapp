@@ -86,6 +86,7 @@ class _StartQuizScreenState extends State<StartQuizScreen> {
                       color: Colors.black54,
                     ),
                   ),
+                  tileColor: index == currentQuestionIndex ? Colors.green : null,
                   onTap: () => answerQuestion(index),
                 );
               },
