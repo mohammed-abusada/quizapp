@@ -332,7 +332,7 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
             child: ElevatedButton(
               onPressed: _addNewQuestion,
               child: Text(
-                'Add New Question',
+                'Add new question',
                 style: TextStyle(
                   fontSize: 24,
                 ),
