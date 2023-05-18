@@ -55,39 +55,62 @@ class _StartQuizScreenState extends State<StartQuizScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'Question ${currentQuestionIndex + 1}:',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
             SizedBox(height: 8.0),
-            Text(
-              questions[currentQuestionIndex]['question'],
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
+            Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0), // Rounded corners for the question container
               ),
-            ),
-            SizedBox(height: 16.0),
-            Text(
-              'Counter: ${currentQuestionIndex + 1}/${questions.length}',
-              style: TextStyle(fontSize: 18),
+              child: Column(
+                children: [
+                  SizedBox(height: 16.0),
+                  Text(
+                    'Question ${currentQuestionIndex + 1}/${questions.length}',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  SizedBox(height: 16.0),
+                  Container(
+                    padding: EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 0, 121, 109), // Background color for the question
+                      borderRadius: BorderRadius.circular(10.0), // Rounded corners for the question container
+                    ),
+                    child: Text(
+                      questions[currentQuestionIndex]['question'],
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: 16.0),
             ListView.builder(
               shrinkWrap: true,
               itemCount: questions[currentQuestionIndex]['options'].length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(
-                    questions[currentQuestionIndex]['options'][index],
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black54,
+                return Container(
+                  margin: EdgeInsets.symmetric(vertical: 4.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Color.fromARGB(255, 0, 121, 109), // Border color for the options
+                      width: 3.0,
                     ),
+                    borderRadius: BorderRadius.circular(8.0), // Rounded corners for the options container
                   ),
-                  tileColor: index == currentQuestionIndex ? Colors.green : null,
-                  onTap: () => answerQuestion(index),
+                  child: ListTile(
+                    title: Text(
+                      questions[currentQuestionIndex]['options'][index],
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black54,
+                      ),
+                    ),
+                    onTap: () => answerQuestion(index),
+                  ),
                 );
               },
             ),
