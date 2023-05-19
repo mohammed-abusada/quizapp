@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'models.dart';
-import 'dbHelper.dart';
+
 import 'AddNewQuestion.dart';
+
+
 
 class CreateQuizScreen extends StatefulWidget {
   final Quiz quiz;
@@ -18,7 +20,7 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
   @override
   void initState() {
     super.initState();
-    _dbHelper = DatabaseHelper();
+_dbHelper = DatabaseHelper.instance;
   }
 
   Future<void> _confirmDeleteQuestion(int questionId) async {
