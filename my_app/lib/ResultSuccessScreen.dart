@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'Homepage.dart';
 
 class ResultSuccessScreen extends StatelessWidget {
+  final int score;
+  ResultSuccessScreen({Key? key, required this.score}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +31,7 @@ class ResultSuccessScreen extends StatelessWidget {
               fit: BoxFit.fill,
             ),
             SizedBox(height: 10),
-            Text("Your Score 5 / 10",
+            Text("Your Score $score / 10",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.green,

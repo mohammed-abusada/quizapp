@@ -1,27 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/AddNewQuestion.dart';
+import 'package:my_app/database_helper.dart';
 import 'models.dart';
 
-import 'AddNewQuestion.dart';
-
-
-
 class CreateQuizScreen extends StatefulWidget {
-  final Quiz quiz;
-
-  CreateQuizScreen({Key? key, required this.quiz}) : super(key: key);
+  CreateQuizScreen({Key? key}) : super(key: key);
 
   @override
   _CreateQuizScreenState createState() => _CreateQuizScreenState();
 }
 
 class _CreateQuizScreenState extends State<CreateQuizScreen> {
-  late DatabaseHelper _dbHelper;
-
-  @override
-  void initState() {
-    super.initState();
-_dbHelper = DatabaseHelper.instance;
-  }
+  DatabaseHelper instance = DatabaseHelper();
 
   Future<void> _confirmDeleteQuestion(int questionId) async {
     final confirmed = await showDialog<bool>(
@@ -43,7 +33,7 @@ _dbHelper = DatabaseHelper.instance;
     );
 
     if (confirmed ?? false) {
-      await _dbHelper.deleteQuestion(questionId);
+      await instance.deleteQuestion(questionId);
       setState(() {}); // Refresh the UI
     }
   }
@@ -63,79 +53,92 @@ _dbHelper = DatabaseHelper.instance;
 
   @override
   Widget build(BuildContext context) {
-    final questions = widget.quiz.questions;
+    return FutureBuilder<List<Quiz>>(
+        future: instance.getQuizzes(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Text("loading");
+          } else if (snapshot.hasError) {
+            return Text('Error');
+          } else if (!snapshot.hasData) {
+            return Text('No quizzes.');
+          } else {
+            List<Quiz> quizzes = snapshot.data!;
+            var questions = quizzes[0].questions;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Create Quiz"),
-        backgroundColor: Color.fromARGB(255, 0, 121, 109),
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton(
-              onPressed: _addNewQuestion,
-              child: Text(
-                'Add new question',
-                style: TextStyle(
-                  fontSize: 24,
-                ),
+            return Scaffold(
+              appBar: AppBar(
+                title: Text("Create Quiz"),
+                backgroundColor: Color.fromARGB(255, 0, 121, 109),
               ),
-              style: ElevatedButton.styleFrom(
-                primary: Color.fromARGB(255, 0, 121, 109),
-                minimumSize: Size(200, 50),
-              ),
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: questions.length,
-              itemBuilder: (context, index) {
-                final question = questions[index];
-
-                return Card(
-                  margin: const EdgeInsets.all(8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ListTile(
-                        title: Text(
-                          question.questionText,
-                          style: Theme.of(context).textTheme.headline6,
-                        ),
-                        trailing: IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () => _confirmDeleteQuestion(question.id),
+              body: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      onPressed: _addNewQuestion,
+                      child: Text(
+                        'Add new question',
+                        style: TextStyle(
+                          fontSize: 24,
                         ),
                       ),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: question.options.length,
-                        itemBuilder: (context, optionIndex) {
-                          final option = question.options[optionIndex];
-
-                          return ListTile(
-                            leading: CircleAvatar(
-                              backgroundColor: option.isCorrect
-                                  ? Colors.green
-                                  : Colors.grey.shade300,
-                              child: Text((optionIndex + 1).toString()),
-                            ),
-                            title: Text(option.optionText),
-                          );
-                        },
+                      style: ElevatedButton.styleFrom(
+                        primary: Color.fromARGB(255, 0, 121, 109),
+                        minimumSize: Size(200, 50),
                       ),
-                    ],
+                    ),
                   ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
-    );
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: questions.length,
+                      itemBuilder: (context, index) {
+                        final question = questions[index];
+
+                        return Card(
+                          margin: const EdgeInsets.all(8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ListTile(
+                                title: Text(
+                                  question.questionText,
+                                  style: Theme.of(context).textTheme.headline6,
+                                ),
+                                trailing: IconButton(
+                                  icon: Icon(Icons.delete),
+                                  onPressed: () =>
+                                      _confirmDeleteQuestion(question.id),
+                                ),
+                              ),
+                              ListView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: question.options.length,
+                                itemBuilder: (context, optionIndex) {
+                                  final option = question.options[optionIndex];
+
+                                  return ListTile(
+                                    leading: CircleAvatar(
+                                      backgroundColor: option.isCorrect
+                                          ? Colors.green
+                                          : Colors.grey.shade300,
+                                      child: Text((optionIndex + 1).toString()),
+                                    ),
+                                    title: Text(option.optionText),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+        });
   }
 }
-
