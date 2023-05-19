@@ -79,7 +79,7 @@ class DatabaseHelper {
     await db.delete('options');
   }
 
-  Future<void> insertQuiz(Quiz quiz) async {
+  Future<void> addQuiz(Quiz quiz) async {
     final db = await database;
 
     await db.transaction((txn) async {

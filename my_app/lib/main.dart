@@ -101,9 +101,7 @@ void main() async {
   await DatabaseHelper().database;
 
   await DatabaseHelper().clearDatabase();
-  await DatabaseHelper().insertQuiz(quizInfo);
-  final quizzes = await DatabaseHelper().getQuizzes();
-  DatabaseHelper().printQuizzes(quizzes);
+  await DatabaseHelper().addQuiz(quizInfo);
 
   runApp(const home());
 }
